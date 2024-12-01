@@ -1,0 +1,47 @@
+"""
+Management command to populate database with sample data
+"""
+from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
+from clusters.models import Cluster
+from staff.models import Department, Staff
+
+class Command(BaseCommand):
+    help = 'Populate database with sample data'
+
+    def handle(self, *args, **options):
+        self.stdout.write(self.style.SUCCESS('Starting to populate database...'))
+        
+        # Create clusters
+        clusters_data = [
+            {'cluster_name': 'Bachelor of Computer Applications', 'cluster_code': 'BCA', 'description': 'Undergraduate computer applications program'},
+            {'cluster_name': 'Bachelor of Commerce', 'cluster_code': 'BCOM', 'description': 'Undergraduate commerce program'},
+            {'cluster_name': 'Master of Commerce', 'cluster_code': 'MCOM', 'description': 'Postgraduate commerce program'},
+            {'cluster_name': 'Bachelor of Arts', 'cluster_code': 'BA', 'description': 'Undergraduate arts program'},
+        ]
+        
+        for cluster_data in clusters_data:
+            cluster, created = Cluster.objects.get_or_create(
+                cluster_code=cluster_data['cluster_code'],
+                defaults=cluster_data
+            )
+            if created:
+                self.stdout.write(f"Created cluster: {cluster.cluster_name}")
+        
+        # Create departments
+        departments_data = [
+            {'name': 'Computer Science', 'code': 'CS', 'description': 'Department of Computer Science'},
+            {'name': 'Commerce', 'code': 'COM', 'description': 'Department of Commerce'},
+            {'name': 'Arts', 'code': 'ARTS', 'description': 'Department of Arts'},
+            {'name': 'Mathematics', 'code': 'MATH', 'description': 'Department of Mathematics'},
+        ]
+        
+        for dept_data in departments_data:
+            dept, created = Department.objects.get_or_create(
+                code=dept_data['code'],
+                defaults=dept_data
+            )
+            if created:
+                self.stdout.write(f"Created department: {dept.name}")
+        
+        self.stdout.write(self.style.SUCCESS('Database population completed successfully!'))
