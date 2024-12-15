@@ -6,11 +6,7 @@ A comprehensive educational web application built with Django (backend) and Reac
 - **Version**: 1.0.0
 - **Status**: In Development
 - **Last Updated**: December 2024
-
-## 📈 Project Status
-- **Version**: 1.0.0
-- **Status**: In Development
-- **Last Updated**: December 2024
+- **Author**: Development Team
 
 ## 🚀 Technology Stack
 
